@@ -1,0 +1,16 @@
+<div class="gridEl" #grid>
+  <div >
+    <svg width="100%" height="100%"
+       xmlns="http://www.w3.org/2000/svg">
+
+      <svg:g *ngFor="let row of _grid"  >
+        <svg:g [data]=sq app-square *ngFor="let sq of row" ></svg:g>
+      </svg:g>
+
+    </svg>
+  </div>
+</div>
+
+<div class="controls" *ngIf='false'>
+  <app-controls></app-controls>
+</div>
