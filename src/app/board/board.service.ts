@@ -7,7 +7,7 @@ export class Square {
   private _pos:number[];
 
   constructor(pos?:number[],state?:boolean) {
-    this._state = state || false;
+    this.state = state || false;
     this._pos = pos || [0,0];
   }
 
@@ -32,6 +32,14 @@ export class Square {
     return this._pos;
   }
 
+}
+
+export class Position {
+  pos:number[];
+
+  constructor(x:number,y:number) {
+    this.pos = [x,y];
+  }
 }
 
 @Injectable({
