@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef,
-          ElementRef,ViewChild } from '@angular/core';
+          ElementRef,ViewChild,HostListener } from '@angular/core';
 
 import { Square, Position } from '../board.service';
 
@@ -14,6 +14,21 @@ export class GridComponent {
 
   private rows:number = 20;
   private cols:number = 20;
+
+  private play:boolean = false;
+  @HostListener('document:keydown',['$event']) keypress(event:KeyboardEvent) {
+
+    if(event.code == "Space" || event.code == "Enter") {
+      this.play = !this.play;
+      let logic:any = null;
+
+      logic = setInterval( () => {
+        this.gameLogic();
+        if(!this.play) clearInterval(logic);
+      },150);
+    }
+
+  };
 
   width=0;
   height=0;
@@ -33,6 +48,14 @@ export class GridComponent {
 
     this.instanceGrid();
     this.ref.detectChanges();
+  }
+
+  ngOnChanges() {
+
+    /*if(this.play) {
+      this.gameLogic();
+    }*/
+
   }
 
   private setSize() {
@@ -71,12 +94,7 @@ export class GridComponent {
   }
 
   onClick(square) {
-    if(square.pos[0] == 0 && square.pos[1] == 0) {
-      this.gameLogic();
-    } else {
-      square.state = !square.state;
-    }
-
+    square.state = !square.state;
   }
 
   private lifeNeighboor(row:number, col:number):boolean {
